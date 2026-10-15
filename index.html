@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fff0f5" />
+    <title>Для мого серденька 💗</title>
+    <style>
+      :root {
+        --pink: #f6b4c7;
+        --rose: #b54b70;
+        --ink: #613746;
+        --soft: #fff4f7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 22px;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 10% 8%, #ffe0ea, transparent 35%),
+          radial-gradient(circle at 90% 90%, #ffe8d9, transparent 35%), #fff8fa;
+        color: var(--ink);
+        font-family: "Trebuchet MS", system-ui, sans-serif;
+      }
+      .card {
+        width: min(100%, 560px);
+        padding: clamp(24px, 6vw, 44px);
+        text-align: center;
+        background: #ffffffed;
+        border: 1px solid #f4d2dd;
+        border-radius: 30px;
+        box-shadow: 0 18px 55px #a83e6218;
+      }
+      .heart {
+        font-size: 52px;
+        animation: beat 1.5s infinite;
+        display: inline-block;
+      }
+      @keyframes beat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        12% {
+          transform: scale(1.12);
+        }
+        24% {
+          transform: scale(1);
+        }
+      }
+      h1 {
+        font-size: clamp(29px, 7vw, 40px);
+        color: var(--rose);
+        margin: 8px 0;
+      }
+      .subtitle {
+        line-height: 1.65;
+        color: #916a79;
+        margin: 0 auto 24px;
+        max-width: 390px;
+      }
+      .pill {
+        display: inline-block;
+        border-radius: 99px;
+        background: #fff0f4;
+        color: #a54b6a;
+        padding: 8px 14px;
+        font-size: 13px;
+        margin-bottom: 14px;
+      }
+      .note {
+        background: linear-gradient(135deg, #fff0f5, #fff8ef);
+        border: 1px solid #f6dce4;
+        border-radius: 22px;
+        padding: 24px 20px;
+        min-height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        line-height: 1.65;
+      }
+      button {
+        border: 0;
+        border-radius: 99px;
+        background: var(--rose);
+        color: white;
+        font: inherit;
+        font-weight: 700;
+        padding: 14px 23px;
+        margin-top: 18px;
+        cursor: pointer;
+        box-shadow: 0 8px 20px #b54b7026;
+      }
+      button:hover {
+        filter: brightness(1.05);
+        transform: translateY(-1px);
+      }
+      button:focus-visible {
+        outline: 3px solid #edb5c8;
+        outline-offset: 3px;
+      }
+      .small {
+        font-size: 13px;
+        line-height: 1.55;
+        color: #a17a87;
+        margin: 18px auto 0;
+      }
+      .footer {
+        margin-top: 22px;
+        color: #a65f78;
+        font-size: 14px;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .gate {
+        margin-top: 8px;
+      }
+      .gate input {
+        width: min(100%, 240px);
+        padding: 12px 15px;
+        border: 1px solid #edc6d3;
+        border-radius: 14px;
+        font: inherit;
+        text-align: center;
+        outline-color: #d77f9c;
+      }
+      .error {
+        color: #b23f62;
+        font-size: 13px;
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <div class="heart" aria-hidden="true">💗</div>
+      <h1>Для мого серденька</h1>
+      <p class="subtitle">
+        Мій кусь, любов моя… Я залишила тут трішки ніжності спеціально для тебе
+        💌
+      </p>
+      <div id="gate" class="gate">
+        <div class="pill">🔐 Маленький секрет тільки для нас</div>
+        <p>Введи наше секретне слово, серденько</p>
+        <input
+          id="secret"
+          type="password"
+          placeholder="Секретне слово"
+          autocomplete="off"
+          aria-label="Секретне слово"
+        />
+        <br /><button id="unlock">Відкрити моє послання 💗</button>
+        <div id="error" class="error" role="alert"></div>
+        <p class="small">
+          Підказка: обери слово, яке зрозуміє тільки твій кусь. Його можна
+          змінити в коді сторінки.
+        </p>
+      </div>
+      <section id="daily" class="hidden" aria-live="polite">
+        <div class="pill" id="date"></div>
+        <div class="note" id="prediction"></div>
+        <button id="open">Отримати ще трішки любові 💌</button>
+        <p class="small" id="hint">
+          Одне передбачення на день — і ще одна причина усміхнутися.
+        </p>
+      </section>
+      <div class="footer">
+        Тебе обіймають. Тебе цьомають. Тебе дуже люблять. 😘
+      </div>
+    </main>
+    <script>
+      const SECRET_WORD = "кусь";
+      const predictions = [
+        "Сьогодні тебе чекає багато поцілунків. Авторка цього передбачення планує особисто проконтролювати його виконання. 💋",
+        "Сьогодні тобі офіційно дозволено бути маленьким капризним кусьом. Обійми від коханої людини обов’язкові. 🧸",
+        "Хтось зараз дуже сильно тебе любить. Підказка: ця людина називає тебе своїм серденьком. ❤️",
+        "Сьогодні ти випадково згадаєш про мене й усміхнешся. Це не випадковість — це я подумки тебе цьомаю. 🥰",
+        "На тебе чекають міцні обійми, у яких можна забути про всі проблеми світу. 🤗",
+        "Сьогодні тобі пощастить! А найбільше твоє везіння вже поруч — це наша любов. 🍀",
+        "Термінове передбачення: тобі потрібен один поцілунок. Ні, краще десять. Для точності прогнозу. 😘",
+        "Сьогодні ти заснеш із думкою, що тебе люблять. А я засну з думкою про свого кусь. 🌙",
+        "Сьогодні ти отримаєш маленьке нагадування про те, що ти — моя найніжніша думка протягом дня. 💌",
+        "Прогноз на день: 90% ніжності, 8% дуркування і 2% бажання вкусити тебе за щічку. 🐻",
+        "Найкращий момент сьогодні ще попереду. Можливо, це буде повідомлення від мене. А можливо — наша зустріч. 💞",
+        "Сьогодні пам’ятай лише одне: ти не сам, у тебе є я, і я на твоєму боці. 🫶",
+        "Всесвіт передає: бережи себе, усміхайся частіше й не забувай, що одне серденько дуже тобою дорожить. ✨",
+        "Сьогодні на тебе чекає позапланова доза милоти. Винуватиця — твоя кохана, і вона не збирається зупинятися. 🐣",
+        "Твоє майбутнє сьогодні виглядає дуже рожевим: трішки романтики, багато тепла і ціла купа нашого «люблю». 💗",
+        "Нехай сьогодні все складається легко, а наприкінці дня в тебе буде щонайменше одна причина пишатися собою. Я в тебе вірю. 🌷",
+        "Якщо день раптом стане важким, уяви, що я обіймаю тебе міцно-міцно й тихенько кажу: «Ми впораємося, серденько». 🫂",
+        "Сьогодні обов’язково зроби щось приємне для себе. Мій кусь заслуговує на турботу не менше, ніж на поцілунки. ☀️",
+        "Маленьке нагадування дня: ти красивий, важливий і дуже-дуже коханий. Так, це передбачення без права на заперечення. 💘",
+        "Сьогоднішня місія: знайти щось смішне, смачно поїсти й подумки отримати від мене три цьомчики. Місія обов’язкова! 😚",
+        "Хто це такий красивенний сьогодні 💌?",
+        "Я передбачаю, що сьогодні ти заслужиш на звання «наймиліший кусь у світі». Нагорода — обійми й цьом у чоло. 🏆",
+        "Нехай усі маленькі справи сьогодні вдаються, кава або чай будуть смачними, а на душі буде затишно. ☕",
+        "Якщо тобі сьогодні знадобиться знак, що ти важливий, ось він: я тебе люблю. Без умов і без особливого приводу. 💗",
+        "Сьогодні дозволь собі трохи відпочити. Навіть супергероям потрібні обійми й ніжність. 🦸‍♂️",
+        "Передбачення на вечір: хтось дуже захоче почути твій голос. Спойлер: це я. 📞",
+        "Ти можеш не встигнути зробити все сьогодні, але ти все одно достатній. Пишаюся тобою, мій хороший. 🌻",
+        "На тебе чекає маленька радість. Не пропусти її, навіть якщо це просто сонечко у вікні або смачний десерт. 🍰",
+        "Сьогодні я подумки кладу тобі поцілунок у кишеньку — дістань його, коли засумуєш. 😘",
+        "Мій кусь, ти робиш світ кращим просто тим, що ти в ньому є. Нехай сьогодні хтось подарує тобі таку ж доброту, яку даруєш іншим. 🌎",
+        "Фінальний прогноз дня: попереду ще багато наших спільних моментів, сміху, обіймів і маленьких пригод. І я дуже цього чекаю. 💞",
+      ];
+
+      const today = new Date();
+      const dateKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+      const start = new Date(today.getFullYear(), 0, 0);
+      const dayOfYear = Math.floor((today - start) / 86400000);
+      const index = (dayOfYear + today.getFullYear()) % predictions.length;
+      document.getElementById("date").textContent = new Intl.DateTimeFormat(
+        "uk-UA",
+        { weekday: "long", day: "numeric", month: "long" },
+      ).format(today);
+      document.getElementById("prediction").textContent = predictions[index];
+
+      function unlock() {
+        const input = document
+          .getElementById("secret")
+          .value.trim()
+          .toLowerCase();
+        if (input === SECRET_WORD) {
+          document.getElementById("gate").classList.add("hidden");
+          document.getElementById("daily").classList.remove("hidden");
+        } else {
+          document.getElementById("error").textContent =
+            "Майже, серденько 💗 Спробуй ще раз!";
+        }
+      }
+      document.getElementById("unlock").addEventListener("click", unlock);
+      document.getElementById("secret").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") unlock();
+      });
+      document.getElementById("open").addEventListener("click", () => {
+        document.getElementById("hint").textContent =
+          "Твоє передбачення на сьогодні вже відкрите 💗 А завтра чекатиме нове!";
+      });
+    </script>
+  </body>
+</html>
